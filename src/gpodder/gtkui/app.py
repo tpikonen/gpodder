@@ -33,7 +33,10 @@ from gpodder.model import check_root_folder_path
 
 from .config import UIConfig
 from .desktop.preferences import gPodderPreferences
-from .main import gPodder
+if gpodder.ui.hdy:
+    from .hdy_main import gPodder
+else:
+    from .main import gPodder
 from .model import Model
 
 import gi  # isort:skip
