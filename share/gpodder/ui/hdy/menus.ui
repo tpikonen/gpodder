@@ -3,19 +3,20 @@
   <menu id="app-menu">
     <section>
       <item>
-        <attribute name="action">app.preferences</attribute>
-        <attribute name="label" translatable="yes">Preferences</attribute>
-        <attribute name="accel">&lt;Primary&gt;p</attribute>
+        <attribute name="action">win.addChannel</attribute>
+        <attribute name="label" translatable="yes">Add podcast via URL</attribute>
+        <attribute name="accel">&lt;Primary&gt;l</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="action">app.gotoMygpo</attribute>
-        <attribute name="label" translatable="yes">Go to gpodder.net</attribute>
+        <attribute name="action">app.preferences</attribute>
+        <attribute name="label" translatable="yes">Preferences</attribute>
+        <attribute name="accel">&lt;Primary&gt;p</attribute>
       </item>
       <item>
-        <attribute name="action">app.checkForUpdates</attribute>
-        <attribute name="label" translatable="yes">Software updates</attribute>
+        <attribute name="action">app.gotoMygpo</attribute>
+        <attribute name="label" translatable="yes">Go to gpodder.net</attribute>
       </item>
     </section>
     <section>
