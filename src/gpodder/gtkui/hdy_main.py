@@ -883,6 +883,9 @@ class gPodder(BuilderWidget, dbus.service.Object):
         return True
 
     def init_episode_list_treeview(self):
+        # connect the swipe hack
+        self.deck.connect("notify::visible-child", self.on_deck_notify_visible_child)
+
         self.episode_list_model.set_view_mode(self.config.episode_list_view_mode)
         self.view_combobox.set_active_id(self.view2id.get(self.config.episode_list_view_mode, 'ALL'))
 
@@ -2427,6 +2430,16 @@ class gPodder(BuilderWidget, dbus.service.Object):
 
     def on_deck_back_clicked(self, widget):
         self.deck.navigate(Handy.NavigationDirection.BACK)
+        return True
+
+    def on_deck_notify_visible_child(self, deck, value):
+        """HACK: Fix libhandy swipe logic when multipile swipable widgets
+        are folded on top of each other.
+        """
+        if self.deck.get_visible_child() == self.detailsbox:
+            self.leaflet.set_can_swipe_back(False)
+        else:
+            self.leaflet.set_can_swipe_back(True)
         return True
 
     def update_episode_list_model(self):
