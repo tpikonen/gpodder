@@ -3560,6 +3560,7 @@ class gPodder(BuilderWidget, dbus.service.Object):
     def on_treeChannels_row_activated(self, widget, path, *args):
         # double-click action of the podcast list or enter
         self.treeChannels.set_cursor(path)
+        self.deck.navigate(Handy.NavigationDirection.BACK)
         self.leaflet.set_can_swipe_forward(True)
         self.leaflet.navigate(Handy.NavigationDirection.FORWARD)
         return True
