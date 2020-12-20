@@ -114,8 +114,13 @@ class gPodder(BuilderWidget, dbus.service.Object):
     def new(self):
         if self.application.want_headerbar:
 #            self.header_bar = Gtk.HeaderBar()
+            # Download new episodes button
+            self.header_bar_dl_new_button = Gtk.Button.new_from_icon_name('folder-download-symbolic', Gtk.IconSize.SMALL_TOOLBAR)
+            self.header_bar_dl_new_button.set_action_name('win.downloadAllNew')
+
             self.header_bar.pack_end(self.application.header_bar_menu_button)
             self.header_bar.pack_start(self.application.header_bar_refresh_button)
+            self.header_bar.pack_start(self.header_bar_dl_new_button)
             self.header_bar.set_show_close_button(True)
             self.header_bar.show_all()
 
