@@ -17,11 +17,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import gi
+gi.require_version('Gtk', '3.0')  # isort:skip
+gi.require_version('Handy', '1')  # isort:skip
 from gi.repository import Gtk, Pango
+from gi.repository import Handy # isort:skip
 
 import gpodder
 from gpodder import util
 from gpodder.gtkui.interface.common import BuilderWidget, TreeViewHelper
+from .. import shownotes
 
 _ = gpodder.gettext
 N_ = gpodder.ngettext
@@ -143,10 +148,13 @@ class gPodderEpisodeSelector(BuilderWidget):
 
         # check/uncheck column
         toggle_cell = Gtk.CellRendererToggle()
+        toggle_cell.set_fixed_size(48, -1)
         toggle_cell.connect('toggled', self.toggle_cell_handler)
         toggle_column = Gtk.TreeViewColumn('', toggle_cell, active=self.COLUMN_TOGGLE)
         toggle_column.set_clickable(True)
         self.treeviewEpisodes.append_column(toggle_column)
+
+        self.toggled = False
 
         next_column = self.COLUMN_ADDITIONAL
         for name, sort_name, sort_type, caption in self.columns:
@@ -227,6 +235,8 @@ class gPodderEpisodeSelector(BuilderWidget):
         path, column = self.treeviewEpisodes.get_cursor()
         if path is not None:
             self.treeviewEpisodes.set_cursor(path, toggle_column)
+
+        self.shownotes_object = shownotes.get_shownotes(self._config.ui.gtk.html_shownotes, self.shownotes_box)
 
         self.calculate_total_size()
 
@@ -341,6 +351,7 @@ class gPodderEpisodeSelector(BuilderWidget):
     def toggle_cell_handler(self, cell, path):
         model = self.treeviewEpisodes.get_model()
         model[path][self.COLUMN_TOGGLE] = not model[path][self.COLUMN_TOGGLE]
+        self.toggled = True
 
         self.calculate_total_size()
 
@@ -383,10 +394,19 @@ class gPodderEpisodeSelector(BuilderWidget):
             self.on_btnCancel_clicked(None)
 
     def on_row_activated(self, treeview, path, view_column):
+        if self.toggled:
+            self.toggled = False
+            return True
         model = treeview.get_model()
-        iter = model.get_iter(path)
-        value = model.get_value(iter, self.COLUMN_TOGGLE)
-        model.set_value(iter, self.COLUMN_TOGGLE, not value)
+        itr = model.get_iter(path)
+        epind = model.get_value(itr, 0)
+        episodes = [self.episodes[epind]]
+        assert episodes
+        self.shownotes_object.show_pane(episodes)
+        self.new_episodes_forward.set_sensitive(True)
+        self.shownotes_box.show()
+        self.new_deck.set_can_swipe_forward(True)
+        self.new_deck.navigate(Handy.NavigationDirection.FORWARD)
 
         self.calculate_total_size()
 
@@ -419,3 +439,11 @@ class gPodderEpisodeSelector(BuilderWidget):
         self.gPodderEpisodeSelector.destroy()
         if self.callback is not None:
             self.callback([])
+
+    def on_new_episodes_forward_clicked(self, widget, *params):
+        self.new_deck.navigate(Handy.NavigationDirection.FORWARD)
+        return True
+
+    def on_notes_back_clicked(self, widget):
+        self.new_deck.navigate(Handy.NavigationDirection.BACK)
+        return True
