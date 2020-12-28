@@ -779,6 +779,8 @@ class gPodder(BuilderWidget, dbus.service.Object):
         def on_key_press(treeview, event):
             if event.keyval == Gdk.KEY_Right:
                 self.treeAvailable.grab_focus()
+                if self.leaflet.get_folded():
+                    self.leaflet.navigate(Handy.NavigationDirection.FORWARD)
             elif event.keyval in (Gdk.KEY_Up, Gdk.KEY_Down):
                 # If section markers exist in the treeview, we want to
                 # "jump over" them when moving the cursor up and down
@@ -1063,6 +1065,11 @@ class gPodder(BuilderWidget, dbus.service.Object):
         def on_key_press(treeview, event):
             if event.keyval == Gdk.KEY_Left:
                 self.treeChannels.grab_focus()
+                if self.leaflet.get_folded():
+                    self.leaflet.navigate(Handy.NavigationDirection.BACK)
+            if event.keyval == Gdk.KEY_Right:
+                self.deck_back.grab_focus()
+                self.deck.navigate(Handy.NavigationDirection.FORWARD)
             elif event.keyval == Gdk.KEY_Escape:
                 if self._search_episodes.search_box.get_property('visible'):
                     self._search_episodes.hide_search()
@@ -2482,6 +2489,7 @@ class gPodder(BuilderWidget, dbus.service.Object):
             self.leaflet.set_can_swipe_back(False)
         else:
             self.leaflet.set_can_swipe_back(True)
+            self.treeAvailable.grab_focus()
         return True
 
     def update_episode_list_model(self):
