@@ -1118,8 +1118,8 @@ class gPodder(BuilderWidget, dbus.service.Object):
             elif event.keyval == Gdk.KEY_Escape:
                 if self._search_episodes.search_box.get_property('visible'):
                     self._search_episodes.hide_search()
-                else:
-                    self.shownotes_object.hide_pane()
+#                else:
+#                    self.shownotes_object.hide_pane()
             elif event.get_state() & Gdk.ModifierType.CONTROL_MASK:
                 # Don't handle type-ahead when control is pressed (so shortcuts
                 # with the Ctrl key still work, e.g. Ctrl+A, ...)
