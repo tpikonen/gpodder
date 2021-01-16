@@ -108,16 +108,23 @@ class gPodder(BuilderWidget, dbus.service.Object):
         if self.application.want_headerbar:
 #            self.header_bar = Gtk.HeaderBar()
             # Download new episodes button
-            self.header_bar_dl_new_button = Gtk.Button.new_from_icon_name('folder-download-symbolic', Gtk.IconSize.SMALL_TOOLBAR)
+            #self.header_bar_dl_new_button = Gtk.Button.new_from_icon_name('folder-download-symbolic', Gtk.IconSize.SMALL_TOOLBAR)
             #self.header_bar_dl_new_button.set_action_name('win.downloadAllNew')
-            self.header_bar_dl_new_button.set_action_name('win.showProgress')
+            # Plus menu button
+            self.header_bar_plus_button = Gtk.MenuButton.new()
+            self.header_bar_plus_button.set_image(Gtk.Image.new_from_icon_name('list-add-symbolic', Gtk.IconSize.SMALL_TOOLBAR))
+            self.header_bar_plus_button.set_use_popover(True)
+            self.plus_popover = Gtk.Popover.new_from_model(self.header_bar_plus_button,
+                self.application.builder.get_object('plus-menu'))
+            self.header_bar_plus_button.set_popover(self.plus_popover)
             # Search button
             self.header_bar_search_button = Gtk.ToggleButton.new()
             self.header_bar_search_button.set_image(Gtk.Image.new_from_icon_name('system-search-symbolic', Gtk.IconSize.SMALL_TOOLBAR))
 
             self.header_bar.pack_end(self.application.header_bar_menu_button)
             self.header_bar.pack_start(self.application.header_bar_refresh_button)
-            self.header_bar.pack_start(self.header_bar_dl_new_button)
+            #self.header_bar.pack_start(self.header_bar_dl_new_button)
+            self.header_bar.pack_start(self.header_bar_plus_button)
             self.header_bar.pack_end(self.header_bar_search_button)
             self.header_bar.set_show_close_button(True)
             self.header_bar.show_all()
@@ -1365,7 +1372,8 @@ class gPodder(BuilderWidget, dbus.service.Object):
                 if queued > 0:
                     s.append(N_('%(count)d queued', '%(count)d queued', queued) % {'count': queued})
                 text.append(' (' + ', '.join(s) + ')')
-#            self.labelDownloads.set_text(''.join(text))
+            #self.labelDownloads.set_text(''.join(text))
+            self.progress_window.set_title(''.join(text))
 
             title = [self.default_title]
 
