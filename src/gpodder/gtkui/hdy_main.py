@@ -134,6 +134,18 @@ class gPodder(BuilderWidget, dbus.service.Object):
 
 #            self.main_window.set_titlebar(self.header_bar)
 
+        self.transfer_button = Gtk.Button.new_with_label("Progress")
+        self.transfer_button.connect("clicked", self.on_show_progress_activate)
+        self.labelDownloads = self.transfer_button.get_child()
+        self.transfer_revealer = Gtk.Revealer()
+        self.transfer_revealer.set_property("halign", Gtk.Align.END)
+        self.transfer_revealer.set_property("valign", Gtk.Align.END)
+        self.transfer_revealer.add(self.transfer_button)
+        self.transfer_revealer.set_reveal_child(False)
+        self.transfer_revealer.show_all()
+        self.main_overlay.add_overlay(self.transfer_revealer)
+        self.main_overlay.set_overlay_pass_through(self.transfer_revealer, True)
+
         gpodder.user_extensions.on_ui_object_available('gpodder-gtk', self)
 #        self.toolbar.set_property('visible', self.config.show_toolbar)
 #
@@ -1372,7 +1384,12 @@ class gPodder(BuilderWidget, dbus.service.Object):
                 if queued > 0:
                     s.append(N_('%(count)d queued', '%(count)d queued', queued) % {'count': queued})
                 text.append(' (' + ', '.join(s) + ')')
-            #self.labelDownloads.set_text(''.join(text))
+                self.labelDownloads.set_text(''.join(text))
+                self.transfer_revealer.set_reveal_child(True)
+            else:
+                # Try to change progress text after revealer transition
+                util.idle_add(self.labelDownloads.set_text, ''.join(text))
+                self.transfer_revealer.set_reveal_child(False)
             self.progress_window.set_title(''.join(text))
 
             title = [self.default_title]
