@@ -146,6 +146,10 @@ class gPodder(BuilderWidget, dbus.service.Object):
         self.main_overlay.add_overlay(self.transfer_revealer)
         self.main_overlay.set_overlay_pass_through(self.transfer_revealer, True)
 
+        self.dl_del_label = self.dl_del_button.get_child()
+        self.dl_del_label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
+        self.dl_del_label.set_max_width_chars(8)
+
         gpodder.user_extensions.on_ui_object_available('gpodder-gtk', self)
 #        self.toolbar.set_property('visible', self.config.show_toolbar)
 #
@@ -3788,13 +3792,13 @@ class gPodder(BuilderWidget, dbus.service.Object):
         self.dl_del_button.set_sensitive(True)
         # ... then connect the correct handler
         if ep.downloading:
-            self.dl_del_button.set_label("Downloading")
+            self.dl_del_label.set_text("Downloading")
             self.dl_del_button.set_sensitive(False)
         elif ep.was_downloaded(and_exists=True):
-            self.dl_del_button.set_label("Delete")
+            self.dl_del_label.set_text("Delete")
             self.dl_del_button.connect("clicked", self.on_episode_delete_clicked)
         else:
-            self.dl_del_button.set_label("Download")
+            self.dl_del_label.set_text("Download")
             self.dl_del_button.connect("clicked", self.on_episode_download_clicked)
         # Play / Stream button
         if ep.was_downloaded(and_exists=True):
@@ -3812,7 +3816,7 @@ class gPodder(BuilderWidget, dbus.service.Object):
         self.download_episode_list(episodes)
 
     def on_episode_download_clicked(self, button):
-        self.dl_del_button.set_label("Downloading")
+        self.dl_del_label.set_text("Downloading")
         self.dl_del_button.set_sensitive(False)
         self.on_download_selected_episodes(button)
         self.deck.navigate(Handy.NavigationDirection.BACK)
