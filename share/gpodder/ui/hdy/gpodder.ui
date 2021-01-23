@@ -7,6 +7,7 @@
   <object class="HdyApplicationWindow" id="gPodder">
     <property name="can-focus">False</property>
     <property name="default-height">480</property>
+    <signal name="delete-event" handler="on_gPodder_delete_event" swapped="no"/>
     <child>
       <object class="GtkOverlay" id="main_overlay">
         <property name="visible">True</property>
