@@ -1439,92 +1439,92 @@ class gPodder(BuilderWidget, dbus.service.Object):
 #            self.update_episode_list_columns_visibility()
             pass
 
-#    def on_treeview_query_tooltip(self, treeview, x, y, keyboard_tooltip, tooltip):
-#        # With get_bin_window, we get the window that contains the rows without
-#        # the header. The Y coordinate of this window will be the height of the
-#        # treeview header. This is the amount we have to subtract from the
-#        # event's Y coordinate to get the coordinate to pass to get_path_at_pos
-#        (x_bin, y_bin) = treeview.get_bin_window().get_position()
-#        x -= x_bin
-#        y -= y_bin
-#        (path, column, rx, ry) = treeview.get_path_at_pos(x, y) or (None,) * 4
-#
-#        if not getattr(treeview, TreeViewHelper.CAN_TOOLTIP) or x > 50 or (column is not None and column != treeview.get_columns()[0]):
-#            setattr(treeview, TreeViewHelper.LAST_TOOLTIP, None)
-#            return False
-#
-#        if path is not None:
-#            model = treeview.get_model()
-#            iter = model.get_iter(path)
-#            role = getattr(treeview, TreeViewHelper.ROLE)
-#
-#            if role == TreeViewHelper.ROLE_EPISODES:
-#                id = model.get_value(iter, EpisodeListModel.C_URL)
-#            elif role == TreeViewHelper.ROLE_PODCASTS:
-#                id = model.get_value(iter, PodcastListModel.C_URL)
-#                if id == '-':
-#                    # Section header - no tooltip here (for now at least)
-#                    return False
-#
-#            last_tooltip = getattr(treeview, TreeViewHelper.LAST_TOOLTIP)
-#            if last_tooltip is not None and last_tooltip != id:
-#                setattr(treeview, TreeViewHelper.LAST_TOOLTIP, None)
-#                return False
-#            setattr(treeview, TreeViewHelper.LAST_TOOLTIP, id)
-#
-#            if role == TreeViewHelper.ROLE_EPISODES:
-#                description = model.get_value(iter, EpisodeListModel.C_TOOLTIP)
-#                if description:
-#                    tooltip.set_text(description)
-#                else:
-#                    return False
-#            elif role == TreeViewHelper.ROLE_PODCASTS:
-#                channel = model.get_value(iter, PodcastListModel.C_CHANNEL)
-#                if channel is None or not hasattr(channel, 'title'):
-#                    return False
-#                error_str = model.get_value(iter, PodcastListModel.C_ERROR)
-#                if error_str:
-#                    error_str = _('Feedparser error: %s') % html.escape(error_str.strip())
-#                    error_str = '<span foreground="#ff0000">%s</span>' % error_str
-#
-#                box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
-#                box.set_border_width(5)
-#
-#                heading = Gtk.Label()
-#                heading.set_max_width_chars(60)
-#                heading.set_alignment(0, 1)
-#                heading.set_markup('<b><big>%s</big></b>\n<small>%s</small>' % (html.escape(channel.title), html.escape(channel.url)))
-#                box.add(heading)
-#
-#                box.add(Gtk.HSeparator())
-#
-#                if channel._update_error is not None:
-#                    description = _('ERROR: %s') % channel._update_error
-#                elif len(channel.description) < 500:
-#                    description = channel.description
-#                else:
-#                    pos = channel.description.find('\n\n')
-#                    if pos == -1 or pos > 500:
-#                        description = channel.description[:498] + '[...]'
-#                    else:
-#                        description = channel.description[:pos]
-#
-#                description = Gtk.Label(label=description)
-#                description.set_max_width_chars(60)
-#                if error_str:
-#                    description.set_markup(error_str)
-#                description.set_alignment(0, 0)
-#                description.set_line_wrap(True)
-#                box.add(description)
-#
-#                box.show_all()
-#                tooltip.set_custom(box)
-#
-#            return True
-#
-#        setattr(treeview, TreeViewHelper.LAST_TOOLTIP, None)
-#        return False
-#
+    def on_treeview_query_tooltip(self, treeview, x, y, keyboard_tooltip, tooltip):
+        # With get_bin_window, we get the window that contains the rows without
+        # the header. The Y coordinate of this window will be the height of the
+        # treeview header. This is the amount we have to subtract from the
+        # event's Y coordinate to get the coordinate to pass to get_path_at_pos
+        (x_bin, y_bin) = treeview.get_bin_window().get_position()
+        x -= x_bin
+        y -= y_bin
+        (path, column, rx, ry) = treeview.get_path_at_pos(x, y) or (None,) * 4
+
+        if not getattr(treeview, TreeViewHelper.CAN_TOOLTIP) or x > 50 or (column is not None and column != treeview.get_columns()[0]):
+            setattr(treeview, TreeViewHelper.LAST_TOOLTIP, None)
+            return False
+
+        if path is not None:
+            model = treeview.get_model()
+            iter = model.get_iter(path)
+            role = getattr(treeview, TreeViewHelper.ROLE)
+
+            if role == TreeViewHelper.ROLE_EPISODES:
+                id = model.get_value(iter, EpisodeListModel.C_URL)
+            elif role == TreeViewHelper.ROLE_PODCASTS:
+                id = model.get_value(iter, PodcastListModel.C_URL)
+                if id == '-':
+                    # Section header - no tooltip here (for now at least)
+                    return False
+
+            last_tooltip = getattr(treeview, TreeViewHelper.LAST_TOOLTIP)
+            if last_tooltip is not None and last_tooltip != id:
+                setattr(treeview, TreeViewHelper.LAST_TOOLTIP, None)
+                return False
+            setattr(treeview, TreeViewHelper.LAST_TOOLTIP, id)
+
+            if role == TreeViewHelper.ROLE_EPISODES:
+                description = model.get_value(iter, EpisodeListModel.C_TOOLTIP)
+                if description:
+                    tooltip.set_text(description)
+                else:
+                    return False
+            elif role == TreeViewHelper.ROLE_PODCASTS:
+                channel = model.get_value(iter, PodcastListModel.C_CHANNEL)
+                if channel is None or not hasattr(channel, 'title'):
+                    return False
+                error_str = model.get_value(iter, PodcastListModel.C_ERROR)
+                if error_str:
+                    error_str = _('Feedparser error: %s') % html.escape(error_str.strip())
+                    error_str = '<span foreground="#ff0000">%s</span>' % error_str
+
+                box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+                box.set_border_width(5)
+
+                heading = Gtk.Label()
+                heading.set_max_width_chars(60)
+                heading.set_alignment(0, 1)
+                heading.set_markup('<b><big>%s</big></b>\n<small>%s</small>' % (html.escape(channel.title), html.escape(channel.url)))
+                box.add(heading)
+
+                box.add(Gtk.HSeparator())
+
+                if channel._update_error is not None:
+                    description = _('ERROR: %s') % channel._update_error
+                elif len(channel.description) < 500:
+                    description = channel.description
+                else:
+                    pos = channel.description.find('\n\n')
+                    if pos == -1 or pos > 500:
+                        description = channel.description[:498] + '[...]'
+                    else:
+                        description = channel.description[:pos]
+
+                description = Gtk.Label(label=description)
+                description.set_max_width_chars(60)
+                if error_str:
+                    description.set_markup(error_str)
+                description.set_alignment(0, 0)
+                description.set_line_wrap(True)
+                box.add(description)
+
+                box.show_all()
+                tooltip.set_custom(box)
+
+            return True
+
+        setattr(treeview, TreeViewHelper.LAST_TOOLTIP, None)
+        return False
+
     def treeview_allow_tooltips(self, treeview, allow):
         setattr(treeview, TreeViewHelper.CAN_TOOLTIP, allow)
 

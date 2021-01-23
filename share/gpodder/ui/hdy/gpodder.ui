@@ -102,6 +102,7 @@
                         <property name="height-request">-1</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="has-tooltip">True</property>
                         <property name="hexpand">True</property>
                         <property name="headers-visible">False</property>
                         <property name="enable-search">False</property>
@@ -111,6 +112,7 @@
                         <signal name="button-release-event" handler="on_treeview_podcasts_button_released" swapped="no"/>
                         <signal name="cursor-changed" handler="on_treeChannels_cursor_changed" swapped="no"/>
                         <signal name="draw" handler="on_treeview_expose_event" swapped="no"/>
+                        <signal name="query-tooltip" handler="on_treeview_query_tooltip" swapped="no"/>
                         <signal name="row-activated" handler="on_treeChannels_row_activated" swapped="no"/>
                         <child internal-child="selection">
                           <object class="GtkTreeSelection"/>
@@ -391,12 +393,14 @@
                               <object class="GtkTreeView" id="treeAvailable">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
+                                <property name="has-tooltip">True</property>
                                 <property name="vexpand">False</property>
                                 <property name="headers-visible">False</property>
                                 <property name="activate-on-single-click">True</property>
                                 <signal name="button-press-event" handler="on_treeview_button_pressed" swapped="no"/>
                                 <signal name="button-release-event" handler="on_treeview_episodes_button_released" swapped="no"/>
                                 <signal name="draw" handler="on_treeview_expose_event" swapped="no"/>
+                                <signal name="query-tooltip" handler="on_treeview_query_tooltip" swapped="no"/>
                                 <signal name="row-activated" handler="on_treeAvailable_row_activated" swapped="no"/>
                                 <child internal-child="selection">
                                   <object class="GtkTreeSelection"/>
