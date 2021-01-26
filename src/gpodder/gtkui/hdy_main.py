@@ -71,6 +71,12 @@ _ = gpodder.gettext
 N_ = gpodder.ngettext
 
 
+# A class for objects with arbitrary attributes (e.g. for imitating Gtk Events)
+class Dummy:
+    def __init__(self, **kwds):
+        self.__dict__.update(kwds)
+
+
 class gPodder(BuilderWidget, dbus.service.Object):
 
     def __init__(self, app, bus_name, gpodder_core, options):
@@ -726,8 +732,8 @@ class gPodder(BuilderWidget, dbus.service.Object):
             return False
 
     def on_treeview_podcasts_long_press(self, gesture, x, y, treeview):
-        self.channels_popover_show(x, y, treeview)
-        return True
+        ev = Dummy(x=x, y=y, button=3)
+        return self.treeview_channels_show_context_menu(treeview, ev)
 
     def on_treeview_episodes_button_released(self, treeview, event):
         if event.window != treeview.get_bin_window():
@@ -739,8 +745,8 @@ class gPodder(BuilderWidget, dbus.service.Object):
             return False
 
     def on_treeview_episodes_long_press(self, gesture, x, y, treeview):
-        self.treeview_available_show_context_menu(treeview, None)
-        return True
+        ev = Dummy(x=x, y=y, button=3, time=Gtk.get_current_event_time())
+        return self.treeview_available_show_context_menu(treeview, ev)
 
     def on_treeview_downloads_button_released(self, treeview, event):
         if event.window != treeview.get_bin_window():
