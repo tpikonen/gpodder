@@ -27,9 +27,8 @@
     <property name="title" translatable="yes">Preferences</property>
     <property name="modal">True</property>
     <property name="window-position">center-on-parent</property>
-    <property name="default-width">320</property>
-    <property name="default-height">260</property>
     <property name="type-hint">dialog</property>
+    <property name="gravity">center</property>
     <signal name="destroy" handler="on_dialog_destroy" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="vbox">
@@ -57,11 +56,10 @@
             </child>
             <child>
               <object class="GtkButton" id="button_close">
-                <property name="label">gtk-close</property>
+                <property name="label">Close</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="receives-default">False</property>
-                <property name="use-stock">True</property>
                 <signal name="clicked" handler="on_button_close_clicked" swapped="no"/>
               </object>
               <packing>
@@ -94,7 +92,7 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <!-- n-columns=3 n-rows=3 -->
+                      <!-- n-columns=2 n-rows=4 -->
                       <object class="GtkGrid" id="table_players">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -113,6 +111,18 @@
                           </packing>
                         </child>
                         <child>
+                          <object class="GtkComboBox" id="combo_audio_player_app">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="hexpand">True</property>
+                            <signal name="changed" handler="on_combo_audio_player_app_changed" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left-attach">0</property>
+                            <property name="top-attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkLabel" id="label_video_player">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
@@ -121,19 +131,7 @@
                           </object>
                           <packing>
                             <property name="left-attach">0</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="combo_audio_player_app">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="hexpand">True</property>
-                            <signal name="changed" handler="on_combo_audio_player_app_changed" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">0</property>
+                            <property name="top-attach">2</property>
                           </packing>
                         </child>
                         <child>
@@ -144,8 +142,8 @@
                             <signal name="changed" handler="on_combo_video_player_app_changed" swapped="no"/>
                           </object>
                           <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">1</property>
+                            <property name="left-attach">0</property>
+                            <property name="top-attach">3</property>
                           </packing>
                         </child>
                         <child>
@@ -163,8 +161,8 @@
                             </child>
                           </object>
                           <packing>
-                            <property name="left-attach">2</property>
-                            <property name="top-attach">0</property>
+                            <property name="left-attach">1</property>
+                            <property name="top-attach">1</property>
                           </packing>
                         </child>
                         <child>
@@ -182,12 +180,9 @@
                             </child>
                           </object>
                           <packing>
-                            <property name="left-attach">2</property>
-                            <property name="top-attach">1</property>
+                            <property name="left-attach">1</property>
+                            <property name="top-attach">3</property>
                           </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
                         </child>
                         <child>
                           <placeholder/>
@@ -203,7 +198,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkHSeparator" id="hseparator_general">
+                      <object class="GtkSeparator" id="hseparator_general">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                       </object>
@@ -248,14 +243,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkTable" id="mygpo_config">
+                  <!-- n-columns=3 n-rows=6 -->
+                  <object class="GtkGrid" id="mygpo_config">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="border-width">6</property>
-                    <property name="n-rows">7</property>
-                    <property name="n-columns">3</property>
-                    <property name="column-spacing">6</property>
-                    <property name="row-spacing">6</property>
+                    <property name="orientation">vertical</property>
+                    <property name="row-spacing">2</property>
+                    <property name="column-spacing">4</property>
+                    <property name="column-homogeneous">True</property>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_enable">
                         <property name="label" translatable="yes">Synchronize subscriptions and episode actions</property>
@@ -266,10 +261,9 @@
                         <signal name="toggled" handler="on_enabled_toggled" swapped="no"/>
                       </object>
                       <packing>
-                        <property name="right-attach">3</property>
-                        <property name="top-attach">1</property>
-                        <property name="bottom-attach">2</property>
-                        <property name="y-options"/>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                        <property name="width">3</property>
                       </packing>
                     </child>
                     <child>
@@ -280,67 +274,8 @@
                         <property name="xalign">1</property>
                       </object>
                       <packing>
-                        <property name="top-attach">2</property>
-                        <property name="bottom-attach">3</property>
-                        <property name="x-options">GTK_FILL</property>
-                        <property name="y-options"/>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label_username">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Username:</property>
-                        <property name="xalign">1</property>
-                      </object>
-                      <packing>
-                        <property name="top-attach">3</property>
-                        <property name="bottom-attach">4</property>
-                        <property name="x-options">GTK_FILL</property>
-                        <property name="y-options"/>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label_password">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Password:</property>
-                        <property name="xalign">1</property>
-                      </object>
-                      <packing>
-                        <property name="top-attach">4</property>
-                        <property name="bottom-attach">5</property>
-                        <property name="x-options">GTK_FILL</property>
-                        <property name="y-options"/>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button_overwrite">
-                        <property name="label" translatable="yes">Replace list on server with local subscriptions</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">False</property>
-                        <signal name="clicked" handler="on_button_overwrite_clicked" swapped="no"/>
-                      </object>
-                      <packing>
-                        <property name="right-attach">3</property>
-                        <property name="top-attach">6</property>
-                        <property name="bottom-attach">7</property>
-                        <property name="y-options"/>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label_caption">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Device name:</property>
-                        <property name="xalign">1</property>
-                      </object>
-                      <packing>
-                        <property name="top-attach">5</property>
-                        <property name="bottom-attach">6</property>
-                        <property name="x-options">GTK_FILL</property>
-                        <property name="y-options"/>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
                       </packing>
                     </child>
                     <child>
@@ -351,10 +286,20 @@
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
-                        <property name="right-attach">3</property>
+                        <property name="top-attach">1</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_username">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Username:</property>
+                        <property name="xalign">1</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
                         <property name="top-attach">2</property>
-                        <property name="bottom-attach">3</property>
-                        <property name="y-options"/>
                       </packing>
                     </child>
                     <child>
@@ -365,10 +310,20 @@
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
-                        <property name="right-attach">3</property>
+                        <property name="top-attach">2</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_password">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Password:</property>
+                        <property name="xalign">1</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
                         <property name="top-attach">3</property>
-                        <property name="bottom-attach">4</property>
-                        <property name="y-options"/>
                       </packing>
                     </child>
                     <child>
@@ -380,10 +335,20 @@
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
-                        <property name="right-attach">3</property>
+                        <property name="top-attach">3</property>
+                        <property name="width">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_caption">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Device name:</property>
+                        <property name="xalign">1</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
                         <property name="top-attach">4</property>
-                        <property name="bottom-attach">5</property>
-                        <property name="y-options"/>
                       </packing>
                     </child>
                     <child>
@@ -394,65 +359,23 @@
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
-                        <property name="right-attach">3</property>
-                        <property name="top-attach">5</property>
-                        <property name="bottom-attach">6</property>
-                        <property name="y-options"/>
+                        <property name="top-attach">4</property>
+                        <property name="width">2</property>
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
+                      <object class="GtkButton" id="button_overwrite">
+                        <property name="label" translatable="yes">Replace list on server with local subscriptions</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <signal name="clicked" handler="on_button_overwrite_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">5</property>
+                        <property name="width">3</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -469,24 +392,24 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
+                      <object class="GtkLabel" id="label_update_interval">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Update interval:</property>
+                        <property name="xalign">0</property>
+                        <property name="yalign">0.10000000149011612</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkBox" id="hbox_updating_interval">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkLabel" id="label_update_interval">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Update interval:</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0.10000000149011612</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
                         <child>
                           <object class="GtkScale" id="hscale_update_interval">
                             <property name="visible">True</property>
@@ -510,11 +433,11 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkHSeparator" id="hseparator_updating">
+                      <object class="GtkSeparator">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                       </object>
@@ -525,23 +448,23 @@
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkLabel" id="label_episode_limit">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Maximum number of episodes per podcast:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkBox" id="hbox_episode_limit">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkLabel" id="label_episode_limit">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Maximum number of episodes per podcast:</property>
-                            <property name="xalign">0</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
                         <child>
                           <object class="GtkSpinButton" id="spinbutton_episode_limit">
                             <property name="visible">True</property>
@@ -553,20 +476,10 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
+                            <property name="pack-type">end</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkHSeparator" id="hseparator_updating2">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -575,23 +488,34 @@
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkSeparator">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_auto_download">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">When new episodes are found:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">6</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkBox" id="hbox_auto_download">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkLabel" id="label_auto_download">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">When new episodes are found:</property>
-                            <property name="xalign">0</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
                         <child>
                           <object class="GtkComboBox" id="combo_auto_download">
                             <property name="visible">True</property>
@@ -601,6 +525,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
+                            <property name="pack-type">end</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
@@ -608,7 +533,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">5</property>
+                        <property name="position">7</property>
                       </packing>
                     </child>
                   </object>
@@ -626,24 +551,24 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
+                      <object class="GtkLabel" id="label_expiration">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Delete played episodes:</property>
+                        <property name="xalign">0</property>
+                        <property name="yalign">0.10000000149011612</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkBox" id="hbox_expiration">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkLabel" id="label_expiration">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Delete played episodes:</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0.10000000149011612</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
                         <child>
                           <object class="GtkScale" id="hscale_expiration">
                             <property name="visible">True</property>
@@ -666,7 +591,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
@@ -680,7 +605,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -694,7 +619,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>
@@ -710,162 +635,138 @@
                     <property name="can-focus">False</property>
                     <property name="border-width">12</property>
                     <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
+                    <property name="spacing">8</property>
                     <child>
-                      <object class="GtkTable" id="table_devices">
+                      <object class="GtkLabel" id="label_device_type">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="n-rows">6</property>
-                        <property name="n-columns">2</property>
-                        <property name="column-spacing">6</property>
-                        <property name="row-spacing">6</property>
-                        <child>
-                          <object class="GtkLabel" id="label_device_type">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Device type:</property>
-                            <property name="justify">right</property>
-                            <property name="xalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="x-options">GTK_FILL</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="combobox_device_type">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <signal name="changed" handler="on_combobox_device_type_changed" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="right-attach">2</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label_device_mount">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Mountpoint:</property>
-                            <property name="xalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="top-attach">1</property>
-                            <property name="bottom-attach">2</property>
-                            <property name="x-options">GTK_FILL</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btn_filesystemMountpoint">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
-                            <signal name="clicked" handler="on_btn_device_mountpoint_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="right-attach">2</property>
-                            <property name="top-attach">1</property>
-                            <property name="bottom-attach">2</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label_on_sync">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">After syncing an episode:</property>
-                            <property name="justify">right</property>
-                            <property name="xalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="top-attach">5</property>
-                            <property name="bottom-attach">6</property>
-                            <property name="x-options">GTK_FILL</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="combobox_on_sync">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <signal name="changed" handler="on_combobox_on_sync_changed" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="right-attach">2</property>
-                            <property name="top-attach">5</property>
-                            <property name="bottom-attach">6</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkCheckButton" id="checkbutton_create_playlists">
-                            <property name="label" translatable="yes">Create playlists on device</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
-                            <property name="draw-indicator">True</property>
-                            <signal name="toggled" handler="on_checkbutton_create_playlists_toggled" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="right-attach">2</property>
-                            <property name="top-attach">2</property>
-                            <property name="bottom-attach">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label_device_playlists">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Playlists Folder:</property>
-                            <property name="xalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="top-attach">3</property>
-                            <property name="bottom-attach">4</property>
-                            <property name="x-options">GTK_FILL</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btn_playlistfolder">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
-                            <signal name="clicked" handler="on_btn_playlist_folder_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="right-attach">2</property>
-                            <property name="top-attach">3</property>
-                            <property name="bottom-attach">4</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkCheckButton" id="checkbutton_delete_using_playlists">
-                            <property name="label" translatable="yes">Remove episodes deleted on device from gPodder</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
-                            <property name="draw-indicator">True</property>
-                          </object>
-                          <packing>
-                            <property name="right-attach">2</property>
-                            <property name="top-attach">4</property>
-                            <property name="bottom-attach">5</property>
-                            <property name="y-options"/>
-                          </packing>
-                        </child>
+                        <property name="label" translatable="yes">Device type:</property>
+                        <property name="xalign">0.009999999776482582</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combobox_device_type">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <signal name="changed" handler="on_combobox_device_type_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_device_mount">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Mountpoint:</property>
+                        <property name="xalign">0.009999999776482582</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btn_filesystemMountpoint">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <signal name="clicked" handler="on_btn_device_mountpoint_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="checkbutton_create_playlists">
+                        <property name="label" translatable="yes">Create playlists on device</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="draw-indicator">True</property>
+                        <signal name="toggled" handler="on_checkbutton_create_playlists_toggled" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_device_playlists">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Playlists Folder:</property>
+                        <property name="xalign">0.009999999776482582</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btn_playlistfolder">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <signal name="clicked" handler="on_btn_playlist_folder_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="checkbutton_delete_using_playlists">
+                        <property name="label" translatable="yes">Remove episodes deleted
+on device from gPodder</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="draw-indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_on_sync">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">After syncing an episode:</property>
+                        <property name="justify">right</property>
+                        <property name="xalign">0.009999999776482582</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combobox_on_sync">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <signal name="changed" handler="on_combobox_on_sync_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">9</property>
                       </packing>
                     </child>
                     <child>
@@ -879,7 +780,7 @@
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">10</property>
                       </packing>
                     </child>
                   </object>
@@ -896,115 +797,80 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <!-- n-columns=3 n-rows=5 -->
-                      <object class="GtkGrid" id="table_video">
+                      <object class="GtkLabel" id="label_preferred_youtube_format">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="row-spacing">6</property>
-                        <property name="column-spacing">6</property>
-                        <child>
-                          <object class="GtkLabel" id="label_preferred_youtube_format">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Preferred YouTube format:</property>
-                            <property name="xalign">0</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="combobox_preferred_youtube_format">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="hexpand">True</property>
-                            <signal name="changed" handler="on_combobox_preferred_youtube_format_changed" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label_preferred_youtube_hls_format">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Preferred YouTube HLS format:</property>
-                            <property name="xalign">0</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="combobox_preferred_youtube_hls_format">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="hexpand">True</property>
-                            <signal name="changed" handler="on_combobox_preferred_youtube_hls_format_changed" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label_preferred_vimeo_format">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Preferred Vimeo format:</property>
-                            <property name="xalign">0</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="combobox_preferred_vimeo_format">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <signal name="changed" handler="on_combobox_preferred_vimeo_format_changed" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
+                        <property name="label" translatable="yes">Preferred YouTube format:</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combobox_preferred_youtube_format">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="hexpand">True</property>
+                        <signal name="changed" handler="on_combobox_preferred_youtube_format_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_preferred_youtube_hls_format">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Preferred YouTube HLS format:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combobox_preferred_youtube_hls_format">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="hexpand">True</property>
+                        <signal name="changed" handler="on_combobox_preferred_youtube_hls_format_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_preferred_vimeo_format">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Preferred Vimeo format:</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="combobox_preferred_vimeo_format">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <signal name="changed" handler="on_combobox_preferred_vimeo_format_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">5</property>
                       </packing>
                     </child>
                   </object>
