@@ -320,6 +320,8 @@ class gPodderPreferences(BuilderWidget):
         self.background_color = get_background_color()
         self.prefs_sidebar_bg.override_background_color(Gtk.StateFlags.NORMAL, self.background_color)
 
+        self.prefs_stack.connect("notify::visible-child", self.on_prefs_sidebar_set_focus_child)
+
     def _extensions_select_function(self, selection, model, path, path_currently_selected):
         return model.get_value(model.get_iter(path), self.C_SHOW_TOGGLE)
 
@@ -704,3 +706,11 @@ class gPodderPreferences(BuilderWidget):
                     label.set_alignment(0., .5)
 
         fs.destroy()
+
+    def on_flap_show_toggled(self, togglebutton, *args):
+        if self.prefs_flap.get_folded():
+            self.prefs_flap.set_reveal_flap(togglebutton.get_active())
+
+    def on_prefs_sidebar_set_focus_child(self, widget, *args):
+        if self.prefs_flap.get_folded():
+            self.prefs_flap.set_reveal_flap(False)
