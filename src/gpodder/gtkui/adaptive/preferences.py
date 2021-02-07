@@ -28,6 +28,7 @@ from gpodder import util, vimeo, youtube
 from gpodder.gtkui.desktopfile import PlayerListModel
 from gpodder.gtkui.interface.common import BuilderWidget, TreeViewHelper
 from gpodder.gtkui.interface.configeditor import gPodderConfigEditor
+from gpodder.gtkui.draw import get_background_color
 
 logger = logging.getLogger(__name__)
 
@@ -315,6 +316,9 @@ class gPodderPreferences(BuilderWidget):
         if result:
             for label, callback in result:
                 self.notebook.append_page(callback(), Gtk.Label(label))
+
+        self.background_color = get_background_color()
+        self.prefs_sidebar_bg.override_background_color(Gtk.StateFlags.NORMAL, self.background_color)
 
     def _extensions_select_function(self, selection, model, path, path_currently_selected):
         return model.get_value(model.get_iter(path), self.C_SHOW_TOGGLE)
