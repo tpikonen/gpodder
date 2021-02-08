@@ -321,6 +321,7 @@ class gPodderPreferences(BuilderWidget):
         self.prefs_sidebar_bg.override_background_color(Gtk.StateFlags.NORMAL, self.background_color)
 
         self.prefs_stack.connect("notify::visible-child", self.on_prefs_sidebar_set_focus_child)
+        self.prefs_flap.set_reveal_flap(True)
 
     def _extensions_select_function(self, selection, model, path, path_currently_selected):
         return model.get_value(model.get_iter(path), self.C_SHOW_TOGGLE)
