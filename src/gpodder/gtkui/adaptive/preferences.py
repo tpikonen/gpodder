@@ -315,7 +315,7 @@ class gPodderPreferences(BuilderWidget):
         result = gpodder.user_extensions.on_preferences()
         if result:
             for label, callback in result:
-                self.notebook.append_page(callback(), Gtk.Label(label))
+                self.prefs_stack.add_titled(callback(), None, Gtk.Label(label))
 
         self.background_color = get_background_color()
         self.prefs_sidebar_bg.override_background_color(Gtk.StateFlags.NORMAL, self.background_color)
