@@ -2051,7 +2051,11 @@ class gPodder(BuilderWidget, dbus.service.Object):
         self.db.commit()
 
     def episode_player(self, episode):
-        file_type = episode.file_type()
+        if (episode.mime_type == 'application/x-gpodder-customdl'
+                and self.config.player.videoplayer_customdl_support):
+            file_type = 'video'
+        else:
+            file_type = episode.file_type()
         if file_type == 'video' and self.config.player.video \
                 and self.config.player.video != 'default':
             player = self.config.player.video
@@ -2194,7 +2198,9 @@ class gPodder(BuilderWidget, dbus.service.Object):
                     logger.error('Invalid episode at path %s', str(path))
                     continue
 
-                if episode.file_type() not in ('audio', 'video'):
+                if (episode.file_type() not in ('audio', 'video') and not
+                        (episode.mime_type == 'application/x-gpodder-customdl'
+                        and self.config.player.videoplayer_customdl_support)):
                     open_instead_of_play = True
 
                 if episode.was_downloaded():

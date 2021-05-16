@@ -545,8 +545,12 @@ class PodcastEpisode(PodcastModelObject):
             return url + '.partial'
 
         if url is None or not os.path.exists(url):
-            # FIXME: may custom downloaders provide the real url ?
-            url = registry.download_url.resolve(config, self.url, self, allow_partial)
+            if (self.mime_type == 'application/x-gpodder-customdl' and
+                    config.player.videoplayer_customdl_support):
+                url = self.url
+            else:
+                # FIXME: may custom downloaders provide the real url ?
+                url = registry.download_url.resolve(config, self.url, self, allow_partial)
         return url
 
     def find_unique_file_name(self, filename, extension):
