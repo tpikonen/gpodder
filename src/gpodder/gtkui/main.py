@@ -2051,8 +2051,7 @@ class gPodder(BuilderWidget, dbus.service.Object):
         self.db.commit()
 
     def episode_player(self, episode):
-        if (episode.mime_type == 'application/x-gpodder-customdl'
-                and self.config.player.videoplayer_customdl_support):
+        if episode.is_streamable_customdl(self.config):
             file_type = 'video'
         else:
             file_type = episode.file_type()
@@ -2199,8 +2198,7 @@ class gPodder(BuilderWidget, dbus.service.Object):
                     continue
 
                 if (episode.file_type() not in ('audio', 'video') and not
-                        (episode.mime_type == 'application/x-gpodder-customdl'
-                        and self.config.player.videoplayer_customdl_support)):
+                        episode.is_streamable_customdl(self.config)):
                     open_instead_of_play = True
 
                 if episode.was_downloaded():

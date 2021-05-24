@@ -545,8 +545,7 @@ class PodcastEpisode(PodcastModelObject):
             return url + '.partial'
 
         if url is None or not os.path.exists(url):
-            if (self.mime_type == 'application/x-gpodder-customdl' and
-                    config.player.videoplayer_customdl_support):
+            if self.is_streamable_customdl(config):
                 url = self.url
             else:
                 # FIXME: may custom downloaders provide the real url ?
