@@ -485,8 +485,7 @@ class gPodderShownotesLabel(gPodderShownotes):
 #        self.label.connect('query-tooltip', self.on_query_tooltip)
         self.label.connect('activate-link', self.on_activate_link)
         self.label.connect('key-press-event', self.on_key_press)
-        # need an EventBox for an opaque background behind the label
-        box = Gtk.EventBox()
+        box = Gtk.Box()
         self.label_bg = box
         box.add(self.label)
         return self.label_bg
