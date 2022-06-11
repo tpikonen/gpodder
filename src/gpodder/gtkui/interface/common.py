@@ -119,14 +119,25 @@ class BuilderWidget(GtkBuilderWidget):
         dlg = Gtk.MessageDialog(self.main_window, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO)
         if title:
             dlg.set_title(str(title))
-            dlg.set_markup('<span weight="bold" size="larger">%s</span>\n\n%s' % (title, message))
+            dlg.set_markup(message)
         else:
-            dlg.set_markup('<span weight="bold" size="larger">%s</span>' % (message))
+            dlg.set_markup('<span weight="bold" size="larger">%s</span>' % message)
+
+        # make title or message copy/pastable
+        for lbl in dlg.get_message_area():
+            if isinstance(lbl, Gtk.Label):
+                lbl.set_halign(Gtk.Align.START)
+                lbl.set_selectable(True)
+
         if checkbox:
             cb = Gtk.CheckButton.new_with_label(checkbox)
+            cb_label = cb.get_child()
+            cb_label.set_line_wrap(True)
             cb.set_active(default_checked)
-            dlg.get_message_area().pack_end(cb, False, False, 0)
-            dlg.get_widget_for_response(Gtk.ResponseType.NO).grab_focus()
+            dlg.get_message_area().pack_start(cb, True, True, 0)
+
+        dlg.get_widget_for_response(Gtk.ResponseType.NO).grab_focus()
+
         dlg.show_all()
         response = dlg.run()
         checked = checkbox and cb.get_active()
